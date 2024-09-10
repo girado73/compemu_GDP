@@ -1,0 +1,2 @@
+void read();
+#pragma once
