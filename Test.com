@@ -1,6 +1,6 @@
 # Routine Display
 1 LDAZ 10 # L ̈adt die Zahl 10 in den Akku, das ist die erste ausgegebene Speicherstelle
-2 WRA 1000  ̈a t e r
+2 WRA 1000
 3 LOAD
 4 DISPA
 5 LDAA 1000
