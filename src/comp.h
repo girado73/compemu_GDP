@@ -9,12 +9,14 @@ class Comp {
 private:
   int akk = 0;
   std::unordered_map<int, int> ram; // hashmap weil schneller als array
-  size_t cursor =
-      0; // cursor beschreibt zeile im code in welcher wir gerade sind
+  static int
+      cursor; // cursor beschreibt zeile im code in welcher wir gerade sind
 
   std::vector<std::pair<std::string, int>> program;
 
   std::unordered_map<std::string, std::function<void(const int x)>> commands;
+
+  void setCursor(int x);
   /*
   void ldaa(int x); // lädt RAM-Adresse in akkumulator
   void ldaz(int x); // lädt die Zahl x in den akkumulator
@@ -51,3 +53,4 @@ public:
   void loadProgram(const std::vector<std::pair<std::string, int>> &newProgram);
   void run();
 };
+#pragma once
