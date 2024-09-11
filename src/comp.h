@@ -5,6 +5,7 @@ class Comp {
 private:
   int akk = 0;
   std::unordered_map<int, int> ram; // hashmap weil schneller als array
+  int cursor = 0; // cursor beschreibt zeile im code in welcher wir gerade sind
 
   void ldaa(int x); // lädt RAM-Adresse in akkumulator
   void ldaz(int x); // lädt die Zahl x in den akkumulator
