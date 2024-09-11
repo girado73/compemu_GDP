@@ -5,61 +5,33 @@
 #include <stdexcept>
 #include <unordered_map>
 
-Comp::Comp() {}
+Comp::Comp() {
+
+  // laden der funktionen in commands map als lambdas
+  commands["LDAA"] = [this](const int &x) { this->akk = getRam(x); };
+  commands["LDAZ"] = [this](const int &x) { this->akk = x; };
+  commands["LOAD"] = [this](const int &x) { this->akk = getRam(this->akk); };
+  commands["ADDZ"] = [this](const int &x) { this->akk += x; };
+  commands["ADDA"] = [this](const int &x) { this->akk += getRam(x); };
+  commands["MULZ"] = [this](const int &x) { this->akk *= x; };
+  commands["MULA"] = [this](const int &x) { this->akk *= getRam(x); };
+  commands["WRA"] = [this](const int &x) { writeRam(x, this->akk); };
+  commands["JMP"] = [this](const int &x) { this->cursor = x; };
+  commands["JIZ"] = [this](const int &x) {
+    if (this->akk == 0)
+      jmp(x);
+  };
+  commands["JIZ"] = [this](const int &x) {
+    if (this->akk != 0)
+      jmp(x);
+  };
+  commands["DISPA"] = [this](const int &x) {
+    std::cout << this->akk << std::endl;
+  };
+  commands["STOP"] = [this](const int &x) { exit(0); };
+}
 
 Comp::~Comp() {}
-
-//-----------------
-
-void Comp::ldaa(int x) { this->akk = getRam(x); }
-
-void Comp::ldaz(int x) { this->akk = x; }
-
-void Comp::load() { this->akk = getRam(this->akk); }
-
-//-----------------
-
-void Comp::addz(int x) { this->akk += x; }
-void Comp::adda(int x) { this->akk += getRam(x); }
-
-//-----------------
-
-void Comp::mulz(int x) { this->akk *= x; }
-void Comp::mula(int x) { this->akk *= getRam(x); }
-
-//-----------------
-
-void Comp::wra(int x) { writeRam(x, this->akk); }
-
-//-----------------
-
-void Comp::jmp(int x) {
-  // TODO hier fehlt auf jeden Fall noch ein überprüfer welcher den jump befehlt
-  // vorraussagt und ggf stoppt
-  this->cursor = x;
-}
-
-void Comp::jiz(int x) {
-  if (this->akk == 0) {
-    jmp(x);
-  }
-}
-
-void Comp::jnz(int x) {
-  if (this->akk != 0) {
-    jmp(x);
-  }
-}
-
-//-----------------
-
-void Comp::dispa() { std::cout << this->akk << std::endl; }
-
-//-----------------
-
-void Comp::stop() { exit(0); }
-
-//-----------------
 
 void Comp::writeRam(int mem, int val) { this->ram[mem] = val; }
 int Comp::getRam(int mem) {
@@ -80,13 +52,12 @@ void Comp::loadProgram(
 void Comp::run() {
   while (this->cursor < program.size()) {
     const auto &[command, param] = program[this->cursor];
-    // if (commands.find(command) != commands.end()){
-    //  commands[command](param)
-    // das funktioniert da die funktionen als
-    // lambdas in der hashmap liegen
-    // }else {
-    //  std::cerr << "Unbekannter Befehl" << command << std::endl;
-    // }
+    if (commands.find(command) != commands.end()) {
+      commands[command](param);
+      // das funktioniert da die funktionen als lambdas in der hashmap liegen
+    } else {
+      std::cerr << "Unbekannter Befehl" << command << std::endl;
+    }
     cursor++;
   }
 };
