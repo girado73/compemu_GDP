@@ -1,5 +1,6 @@
 #include "comp.h"
 #include "reader.h"
+#include <cstdlib>
 #include <iostream>
 #include <ostream>
 #include <stdio.h>
@@ -7,7 +8,11 @@
 #include <vector>
 
 int main(int argc, char const *argv[]) {
-  std::string filename = "Test.com";
+  if (argc < 2) {
+    std::cout << "Usage: compemu <Filename>" << std::endl;
+    exit(1);
+  }
+  std::string filename = argv[1];
   std::vector<std::string> lines = readFile(filename);
   auto program = linesToProgram(lines);
 
