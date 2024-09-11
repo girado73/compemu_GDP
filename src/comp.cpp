@@ -19,16 +19,16 @@ Comp::Comp() {
   commands["JMP"] = [this](const int &x) { this->cursor = x; };
   commands["JIZ"] = [this](const int &x) {
     if (this->akk == 0)
-      jmp(x);
+      this->cursor = x;
   };
-  commands["JIZ"] = [this](const int &x) {
+  commands["JNZ"] = [this](const int &x) {
     if (this->akk != 0)
-      jmp(x);
+      this->cursor = x;
   };
   commands["DISPA"] = [this](const int &x) {
     std::cout << this->akk << std::endl;
   };
-  commands["STOP"] = [this](const int &x) { exit(0); };
+  commands["STOP"] = [this](const int &x) { this->~Comp(); };
 }
 
 Comp::~Comp() {}

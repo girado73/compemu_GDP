@@ -15,7 +15,7 @@ private:
   std::vector<std::pair<std::string, int>> program;
 
   std::unordered_map<std::string, std::function<void(const int x)>> commands;
-
+  /*
   void ldaa(int x); // lädt RAM-Adresse in akkumulator
   void ldaz(int x); // lädt die Zahl x in den akkumulator
   void load(); // lädt die Zahl aus er Speicherstelle, deren addresse im Akku
@@ -41,6 +41,7 @@ private:
   void matcher(std::string command, int x = 0);
   // dieser nimmt einen string wert und matcht diesen
   // zur passenden funktion
+  */
 
 public:
   Comp();
