@@ -23,14 +23,8 @@ Comp::Comp() {
       this->cursor = x;
   };
   commands["JNZ"] = [this](const int &x) {
-    std::cout << "JNZ called. akk = " << this->akk << ", jump target = " << x
-              << ", current cursor = " << this->cursor << std::endl;
     if (this->akk != 0) {
-      std::cout << "Jumping to " << x << std::endl;
       this->cursor = x; // Directly modify the cursor
-      std::cout << "Cursor after jump: " << this->cursor << std::endl;
-    } else {
-      std::cout << "Not jumping (akk == 0)" << std::endl;
     }
   };
 
@@ -60,21 +54,16 @@ void Comp::loadProgram(
 
 void Comp::run() {
   while (this->cursor >= 0 && this->cursor < static_cast<int>(program.size())) {
-    std::cout << "Start of loop. Cursor: " << this->cursor << std::endl;
     int old_cursor = this->cursor;
     const auto &[command, param] = program[this->cursor];
-    std::cout << "Executing command: " << command << " with param: " << param
-              << std::endl;
     if (commands.find(command) != commands.end()) {
       commands[command](param);
     } else {
       std::cerr << "Unbekannter Befehl: " << command << std::endl;
     }
-    std::cout << "After execution. Cursor: " << this->cursor << std::endl;
     if (this->cursor == old_cursor) {
       // Only increment if the command didn't change the cursor
       this->cursor++;
     }
-    std::cout << "End of loop. Cursor: " << this->cursor << std::endl;
   }
 }
