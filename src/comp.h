@@ -1,11 +1,16 @@
 #include <string>
 #include <unordered_map>
+#include <utility>
+#include <vector>
 
 class Comp {
 private:
   int akk = 0;
   std::unordered_map<int, int> ram; // hashmap weil schneller als array
   int cursor = 0; // cursor beschreibt zeile im code in welcher wir gerade sind
+
+  size_t cursor = 0;
+  std::vector<std::pair<std::string, int>> program;
 
   void ldaa(int x); // lädt RAM-Adresse in akkumulator
   void ldaz(int x); // lädt die Zahl x in den akkumulator
@@ -38,4 +43,6 @@ public:
   ~Comp();
   void writeRam(int mem, int val); // wrapper für key value creation
   int getRam(int mem);             // wraper für hashmap getter
+  void loadProgram(const std::vector<std::pair<std::string, int>> &newProgram);
+  void run();
 };

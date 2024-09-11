@@ -71,3 +71,22 @@ int Comp::getRam(int mem) {
     return 0;
   }
 }
+
+void Comp::loadProgram(
+    const std::vector<std::pair<std::string, int>> &newProgram) {
+  this->program = newProgram;
+};
+
+void Comp::run() {
+  while (this->cursor < program.size()) {
+    const auto &[command, param] = program[this->cursor];
+    // if (commands.find(command) != commands.end()){
+    //  commands[command](param)
+    // das funktioniert da die funktionen als
+    // lambdas in der hashmap liegen
+    // }else {
+    //  std::cerr << "Unbekannter Befehl" << command << std::endl;
+    // }
+    cursor++;
+  }
+};
