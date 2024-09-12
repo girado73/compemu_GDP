@@ -31,6 +31,15 @@ std::string trimTrailingWhitespace(const std::string &str) {
   return str.substr(0, end + 1);
 }
 
+std::string removeBeforeFirstSpace(std::string input) {
+  size_t spacePos = input.find(' ');
+  if (spacePos != std::string::npos) {
+    return input.substr(spacePos + 1);
+  }
+  return input; // Wenn kein Leerzeichen gefunden wurde, gib den ursprünglichen
+                // String zurück
+}
+
 std::vector<std::string> readFile(const std::string &filename) {
   std::vector<std::string> lines;
   std::ifstream file(filename);
@@ -46,7 +55,7 @@ std::vector<std::string> readFile(const std::string &filename) {
     if (trim != "") {
       // TODO das funktioniert so nicht, wir m√ºssen alles vorm ersten
       // leerzeichen skippen
-      lines.push_back(trim.substr(2));
+      lines.push_back(removeBeforeFirstSpace(trim));
     }
   }
 
