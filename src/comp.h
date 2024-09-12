@@ -25,5 +25,7 @@ public:
   int getRam(int mem);             // wraper für hashmap getter
   void loadProgram(const std::vector<std::pair<std::string, int>> &newProgram);
   void run();
+  int getAKK();
+  void resetCursor();
 };
 #pragma once
