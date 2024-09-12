@@ -8,6 +8,9 @@
 
 int Comp::cursor = 0;
 Comp::Comp() {
+  // eigentlich haben wir nur einen cursor, da wir nur ein Comp haben. Wenn aber
+  // getestet wird, testen wir jedes mal aufs neue d.h. cursor reset
+  this->cursor = 0;
   // laden der funktionen in commands map als lambdas
   commands["LDAA"] = [this](const int &x) { this->akk = getRam(x); };
   commands["LDAZ"] = [this](const int &x) { this->akk = x; };
@@ -31,7 +34,9 @@ Comp::Comp() {
   commands["DISPA"] = [this](const int &x) {
     std::cout << this->akk << std::endl;
   };
-  commands["STOP"] = [this](const int &x) { this->~Comp(); };
+  commands["STOP"] = [this](const int &x) {
+    this->cursor = this->program.size();
+  };
 }
 
 Comp::~Comp() {}
@@ -46,6 +51,10 @@ int Comp::getRam(int mem) {
     return 0;
   }
 }
+
+int Comp::getAKK() { return this->akk; }
+
+void Comp::resetCursor() { this->cursor = 0; }
 
 void Comp::loadProgram(
     const std::vector<std::pair<std::string, int>> &newProgram) {
