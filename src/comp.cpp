@@ -19,29 +19,30 @@ Comp::Comp() {
   // Cursor reset for Tests
   this->cursor = 0;
 
-  commands["LDAA"] = [this](const int &x) { this->akk = getRam(x); };
-  commands["LDAZ"] = [this](const int &x) { this->akk = x; };
-  commands["LOAD"] = [this](const int &x) { this->akk = getRam(this->akk); };
-  commands["ADDZ"] = [this](const int &x) { this->akk += x; };
-  commands["ADDA"] = [this](const int &x) { this->akk += getRam(x); };
-  commands["MULZ"] = [this](const int &x) { this->akk *= x; };
-  commands["MULA"] = [this](const int &x) { this->akk *= getRam(x); };
-  commands["WRA"] = [this](const int &x) { writeRam(x, this->akk); };
-  commands["JMP"] = [this](const int &x) { this->cursor = x; };
-  commands["JIZ"] = [this](const int &x) {
+  commands["LDAA"] = [this](const int &x) -> void { this->akk = getRam(x); };
+  commands["LDAZ"] = [this](const int &x) -> void { this->akk = x; };
+  commands["LOAD"] = [this](const int &x) -> void {
+    this->akk = getRam(this->akk);
+  };
+  commands["ADDZ"] = [this](const int &x) -> void { this->akk += x; };
+  commands["ADDA"] = [this](const int &x) -> void { this->akk += getRam(x); };
+  commands["MULZ"] = [this](const int &x) -> void { this->akk *= x; };
+  commands["MULA"] = [this](const int &x) -> void { this->akk *= getRam(x); };
+  commands["WRA"] = [this](const int &x) -> void { writeRam(x, this->akk); };
+  commands["JMP"] = [this](const int &x) -> void { this->cursor = x; };
+  commands["JIZ"] = [this](const int &x) -> void {
     if (this->akk == 0)
       this->cursor = x;
   };
-  commands["JNZ"] = [this](const int &x) {
+  commands["JNZ"] = [this](const int &x) -> void {
     if (this->akk != 0) {
       this->cursor = x; // Directly modify the cursor
     }
   };
-
-  commands["DISPA"] = [this](const int &x) {
+  commands["DISPA"] = [this](const int &x) -> void {
     std::cout << this->akk << std::endl;
   };
-  commands["STOP"] = [this](const int &x) { this->program.clear(); };
+  commands["STOP"] = [this](const int &x) -> void { this->program.clear(); };
 }
 
 /**
@@ -99,6 +100,7 @@ void Comp::run() {
       commands[command](param);
     } else {
       std::cerr << "Unbekannter Befehl: " << command << std::endl;
+      exit(1);
     }
     if (this->cursor == old_cursor) {
       // Only increment if the command didn't change the cursor

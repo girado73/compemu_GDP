@@ -56,6 +56,12 @@ std::string trimTrailingWhitespace(const std::string &str) {
  * @return gibt den neuen String zurueck
  */
 std::string removeBeforeFirstSpace(std::string input) {
+
+  // Überprüfen, ob der erste Buchstabe ein Großbuchstabe ist
+  if (!input.empty() && std::isupper(input[0])) {
+    return input; // Wenn ja, gib den ursprünglichen String zurück
+  }
+
   size_t spacePos = input.find(' ');
   if (spacePos != std::string::npos) {
     return input.substr(spacePos + 1);
