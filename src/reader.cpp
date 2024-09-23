@@ -2,13 +2,22 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <list>
 #include <string>
 #include <vector>
 
+/**
+ * Erstelle ein Synonym fuer die Command Pairs
+ */
 using commands = std::pair<std::string, int>;
-std::list<commands> commandlist;
 
+/**
+ * Droppe in str alle zeichen nach delimiter
+ *
+ * @param str Der zu bearbeitende String
+ * @param delimiter Der gewaehlte delimiter
+ *
+ * @return gibt den neuen String zurueck
+ */
 std::string dropAfter(std::string str, char delimiter) {
   size_t pos = str.find(delimiter);
   if (pos != std::string::npos) {
@@ -17,6 +26,13 @@ std::string dropAfter(std::string str, char delimiter) {
   return str;
 }
 
+/**
+ * Loesche alle whitespaces nach dem letzten Zeichen
+ *
+ * @param str Der zu bearbeitende String
+ *
+ * @return gibt den neuen String zurueck
+ */
 std::string trimTrailingWhitespace(const std::string &str) {
   if (str.empty()) {
     return str;
@@ -31,6 +47,14 @@ std::string trimTrailingWhitespace(const std::string &str) {
   return str.substr(0, end + 1);
 }
 
+/**
+ * Loesche alle Nummern vor den Befehlen
+ * Wir brauchen keine Nummern da wir den Index des Vectors benutzen
+ *
+ * @param input Der zu bearbeitende String
+ *
+ * @return gibt den neuen String zurueck
+ */
 std::string removeBeforeFirstSpace(std::string input) {
   size_t spacePos = input.find(' ');
   if (spacePos != std::string::npos) {
@@ -40,6 +64,12 @@ std::string removeBeforeFirstSpace(std::string input) {
                 // String zurück
 }
 
+/**
+ * Lieﬂt die gegebene Datei ein und speichert die Zeilen in einem Vector
+ *
+ * @param filename Name der Datei welche eingelesen werden soll
+ * @return gibt den Eingelesenen Vector zurueck
+ */
 std::vector<std::string> readFile(const std::string &filename) {
   std::vector<std::string> lines;
   std::ifstream file(filename);
@@ -63,9 +93,14 @@ std::vector<std::string> readFile(const std::string &filename) {
   return lines;
 }
 
-std::vector<std::pair<std::string, int>>
-linesToProgram(const std::vector<std::string> &lines) {
-  std::vector<std::pair<std::string, int>> program;
+/**
+ * Parse den Stringvector in Vector<pair<string, int>>
+ *
+ * @param lines Einen Stringvector der Dateizeilen
+ * @return einen Vector aus String Int Pairs
+ */
+std::vector<commands> linesToProgram(const std::vector<std::string> &lines) {
+  std::vector<commands> program;
   for (const std::string &line : lines) {
     size_t spacePos = line.find(' ');
     if (spacePos != std::string::npos) {
@@ -79,17 +114,4 @@ linesToProgram(const std::vector<std::string> &lines) {
     }
   }
   return program;
-}
-
-void read() {
-  // Adding tuples to the list
-  commandlist.push_back(std::make_tuple("Hello", 3));
-  commandlist.push_back(std::make_tuple("World", 2));
-  commandlist.emplace_back("C++", 3);
-
-  // Iterating through the list
-  for (const auto &item : commandlist) {
-    std::cout << "String: " << std::get<0>(item)
-              << ", Int: " << std::get<1>(item) << std::endl;
-  }
 }

@@ -7,6 +7,12 @@
 #include <string>
 #include <vector>
 
+/**
+ * Ließ die Datei aus den Env-args ein, lade das Programm und fuehre es aus
+ *
+ * @oaram argc Anzahl der gegebenen Argumente
+ * @oaram argv Die gegebenen Argumente
+ */
 int main(int argc, char const *argv[]) {
   if (argc < 2) {
     std::cout << "Usage: compemu <Filename>" << std::endl;
@@ -16,14 +22,6 @@ int main(int argc, char const *argv[]) {
   std::vector<std::string> lines = readFile(filename);
   auto program = linesToProgram(lines);
 
-  /*
-  for (std::string &line : lines) {
-    std::cout << line << std::endl;
-  }
-  for (const auto &[command, param] : program) {
-    std::cout << "command: " << command << "\nparam: " << param << std::endl;
-  }
-  */
   Comp mycomp = *new Comp();
 
   mycomp.loadProgram(program);

@@ -6,12 +6,19 @@
 #include <stdexcept>
 #include <unordered_map>
 
+/**
+ * Setze den static Cursor auf 0
+ */
 int Comp::cursor = 0;
+
+/**
+ * Erstelle den Compemulator +
+ * definiere und lade alle Befehle in die Commands Map
+ */
 Comp::Comp() {
-  // eigentlich haben wir nur einen cursor, da wir nur ein Comp haben. Wenn aber
-  // getestet wird, testen wir jedes mal aufs neue d.h. cursor reset
+  // Cursor reset for Tests
   this->cursor = 0;
-  // laden der funktionen in commands map als lambdas
+
   commands["LDAA"] = [this](const int &x) { this->akk = getRam(x); };
   commands["LDAZ"] = [this](const int &x) { this->akk = x; };
   commands["LOAD"] = [this](const int &x) { this->akk = getRam(this->akk); };
@@ -37,9 +44,25 @@ Comp::Comp() {
   commands["STOP"] = [this](const int &x) { this->program.clear(); };
 }
 
+/**
+ * Dekonstrukte den Compemulator
+ */
 Comp::~Comp() {}
 
+/**
+ *  Schreibe in die RAM-Map
+ *
+ *  @param mem Die Memory Adresse in die geschrieben wird
+ *  @param val Das Value zur Memory Adresse
+ */
 void Comp::writeRam(int mem, int val) { this->ram[mem] = val; }
+
+/**
+ * Gib ein Value aus der RAM-Map zurück
+ *
+ * @param mem Die passende Memory Adresse
+ * @return Den passenden Wert zu Mem
+ */
 int Comp::getRam(int mem) {
   try {
     return this->ram.at(mem);
@@ -50,15 +73,24 @@ int Comp::getRam(int mem) {
   }
 }
 
+/**
+ * Gette den Akkumulator (für Tests)
+ */
 int Comp::getAKK() { return this->akk; }
 
-void Comp::resetCursor() { this->cursor = 0; }
-
+/**
+ * Lade das Progamm in den Program Vector
+ *
+ * @param newProgram Der Pair Vector in welchem die Programmbefehle liegen
+ */
 void Comp::loadProgram(
     const std::vector<std::pair<std::string, int>> &newProgram) {
   this->program = newProgram;
 };
 
+/**
+ * Execute das Programm innerhalb des Program Vectors
+ */
 void Comp::run() {
   while (this->cursor >= 0 && this->cursor < static_cast<int>(program.size())) {
     int old_cursor = this->cursor;
