@@ -34,6 +34,7 @@ private:
 
   void dispa_test();
   void stop_test();
+  void mem_override();
 
   void printFunction(std::string funcname);
 };
@@ -188,7 +189,7 @@ void tests::jiz_test() {
   program.push_back(std::make_pair("LDAZ", 900));
   program.push_back(std::make_pair("JIZ", 3));
   program.push_back(
-      std::make_pair("STOP", 0)); // wir springen nicht hier drüber
+      std::make_pair("TESTSTOP", 0)); // wir springen nicht hier drüber
   program.push_back(std::make_pair("ADDZ", 10));
   testcomp.loadProgram(program);
   testcomp.run();
@@ -204,7 +205,7 @@ void tests::jnz_test() {
   std::vector<std::pair<std::string, int>> program;
   program.push_back(std::make_pair("LDAZ", 900));
   program.push_back(std::make_pair("JNZ", 3));
-  program.push_back(std::make_pair("STOP", 0)); // wir springen hier drüber
+  program.push_back(std::make_pair("TESTSTOP", 0)); // wir springen hier drüber
   program.push_back(std::make_pair("ADDZ", 10));
   testcomp.loadProgram(program);
   testcomp.run();
@@ -219,12 +220,29 @@ void tests::stop_test() {
   printFunction(__func__);
   std::vector<std::pair<std::string, int>> program;
   program.push_back(std::make_pair("LDAZ", 900));
-  program.push_back(std::make_pair("STOP", 0)); // wir stoppen hier
+  program.push_back(std::make_pair("TESTSTOP", 0)); // wir stoppen hier
   program.push_back(std::make_pair("ADDZ", 10));
   testcomp.loadProgram(program);
   testcomp.run();
   std::cout << "AKK: " << testcomp.getAKK() << std::endl;
   assert(testcomp.getAKK() == 900);
+  std::cout << "Assertation Succeeded " << std::endl;
+  std::cout << "---------------------\n" << std::endl;
+}
+
+void tests::mem_override() {
+  Comp testcomp;
+  printFunction(__func__);
+  std::vector<std::pair<std::string, int>> program;
+  program.push_back(std::make_pair("LDAZ", 9));
+  program.push_back(std::make_pair("WRA", 1000));
+  program.push_back(std::make_pair("ADDZ", -1));
+  program.push_back(std::make_pair("WRA", 1000));
+  program.push_back(std::make_pair("LDAA", 1000));
+  testcomp.loadProgram(program);
+  testcomp.run();
+  std::cout << "AKK: " << testcomp.getAKK() << std::endl;
+  assert(testcomp.getAKK() == 8);
   std::cout << "Assertation Succeeded " << std::endl;
   std::cout << "---------------------\n" << std::endl;
 }
@@ -242,6 +260,7 @@ void tests::run_tests() {
   jiz_test();
   jnz_test();
   stop_test();
+  mem_override();
 }
 
 int main(int argc, char *argv[]) {

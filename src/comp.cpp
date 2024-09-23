@@ -42,7 +42,10 @@ Comp::Comp() {
   commands["DISPA"] = [this](const int &x) -> void {
     std::cout << this->akk << std::endl;
   };
-  commands["STOP"] = [this](const int &x) -> void { this->program.clear(); };
+  commands["STOP"] = [](const int &x) -> void { exit(0); };
+  commands["TESTSTOP"] = [this](const int &x) -> void {
+    this->program.clear();
+  };
 }
 
 /**
