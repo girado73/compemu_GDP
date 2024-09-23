@@ -80,6 +80,8 @@ int Comp::getAKK() { return this->akk; }
 
 /**
  * Lade das Progamm in den Program Vector
+ *
+ * @param newProgram Der Pair Vector in welchem die Programmbefehle liegen
  */
 void Comp::loadProgram(
     const std::vector<std::pair<std::string, int>> &newProgram) {
