@@ -263,7 +263,7 @@ void tests::run_tests() {
   mem_override();
 }
 
-int main(int argc, char *argv[]) {
+int main() {
   tests tests = *new class tests();
 
   tests.run_tests();
