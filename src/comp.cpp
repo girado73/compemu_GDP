@@ -9,6 +9,7 @@
 /**
  * Setze den static Cursor auf 0
  */
+// TODO diesen hier vielleicht auf 1 setzen???
 int Comp::cursor = 0;
 
 /**
@@ -17,13 +18,12 @@ int Comp::cursor = 0;
  */
 Comp::Comp() {
   // Cursor reset for Tests
+  // TODO hier vielleicht auf auf 1 setzen???
   this->cursor = 0;
 
   commands["LDAA"] = [this](const int &x) -> void { this->akk = getRam(x); };
   commands["LDAZ"] = [this](const int &x) -> void { this->akk = x; };
-  commands["LOAD"] = [this](const int &x) -> void {
-    this->akk = getRam(this->akk);
-  };
+  commands["LOAD"] = [this](int) -> void { this->akk = getRam(this->akk); };
   commands["ADDZ"] = [this](const int &x) -> void { this->akk += x; };
   commands["ADDA"] = [this](const int &x) -> void { this->akk += getRam(x); };
   commands["MULZ"] = [this](const int &x) -> void { this->akk *= x; };
@@ -39,13 +39,11 @@ Comp::Comp() {
       this->cursor = x; // Directly modify the cursor
     }
   };
-  commands["DISPA"] = [this](const int &x) -> void {
+  commands["DISPA"] = [this](int) -> void {
     std::cout << this->akk << std::endl;
   };
-  commands["STOP"] = [](const int &x) -> void { exit(0); };
-  commands["TESTSTOP"] = [this](const int &x) -> void {
-    this->program.clear();
-  };
+  commands["STOP"] = [](int) -> void { exit(0); };
+  commands["TESTSTOP"] = [this](int) -> void { this->program.clear(); };
 }
 
 /**
