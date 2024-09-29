@@ -1,6 +1,9 @@
 # compemu_GDP
 Computer Emulation Projekt for GDP
 
+Github Repository: 
+https://github.com/girado73/compemu_GDP
+
 ## Usage:
 
 ### Compilation:
