@@ -1,21 +1,17 @@
-# compemu_GDP
-Computer Emulation Projekt for GDP
+Compilation des Programms:
 
-## Usage:
+make
 
-### Compilation:
+(Die Befehle welche zum Compilieren verwendet werden sind im Makefile zu finden)
 
-`make` um compemu zu compilieren
+Ausführen des Programms:
 
-`make tests` um tests zu compilieren
+./bin/compemu <inputfile>
 
-### Execution:
+(Dabei ist inputfile der Pfad zu ihrer Datei ist welche Ausgeführt werden soll)
 
-`./bin/compemu <Program File>` wobei Program File die datei ist welche ausgeführt werden soll
 
-`./bin/tester` führt die Tests aus 
-
-### Important Informations:
+Zusätzliche Informationen:
 
 - Der Cursor beginnt bei 0 in den Programmen und er nimmt nicht Annotation von Zahlen am Zeilenbeginn als Linieneingabe sondern Zählt intern.
 - Der RAM hat genauch 1001 Speicherplätze. Von 0 bis 1000.

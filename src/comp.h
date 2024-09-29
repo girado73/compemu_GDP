@@ -7,15 +7,14 @@
 
 class Comp {
 private:
-  int akk = 0;
+  int akk;
   std::unordered_map<int, int> ram; // hashmap weil schneller als array
+
   static int cursor; // cursor beschreibt zeile im code in welcher wir gerade
                      // sind kann static sein weil wir eh nur einen Comp haben
 
   std::vector<std::pair<std::string, int>> program;
-
   std::unordered_map<std::string, std::function<void(const int x)>> commands;
-
   void setCursor(int x);
 
 public:

@@ -5,9 +5,7 @@
 #include <string>
 #include <vector>
 
-/**
- * Erstelle ein Synonym fuer die Command Pairs
- */
+// Erstelle ein Synonym fuer die Command Pairs
 using commands = std::pair<std::string, int>;
 
 /**
@@ -89,8 +87,6 @@ std::vector<std::string> readFile(const std::string &filename) {
   while (std::getline(file, line)) {
     std::string trim = trimTrailingWhitespace(dropAfter(line, '#'));
     if (trim != "") {
-      // TODO das funktioniert so nicht, wir mÃ¼ssen alles vorm ersten
-      // leerzeichen skippen
       lines.push_back(removeBeforeFirstSpace(trim));
     }
   }
@@ -110,12 +106,13 @@ std::vector<commands> linesToProgram(const std::vector<std::string> &lines) {
   for (const std::string &line : lines) {
     size_t spacePos = line.find(' ');
     if (spacePos != std::string::npos) {
-      // If there's a space, split the line into command and value
+      // Falls da ein Leerzeichen ist, teile den String
       std::string command = line.substr(0, spacePos);
       int value = std::stoi(line.substr(spacePos + 1));
       program.emplace_back(command, value);
     } else {
-      // If there's no space, the whole line is the command and value is 0
+      // Falls kein Leerzeichen gefunden wurde, füge den ganzen String hinzu und
+      // setze den Wert auf 0
       program.emplace_back(line, 0);
     }
   }

@@ -3,15 +3,14 @@
 #include <cstdlib>
 #include <iostream>
 #include <ostream>
-#include <stdio.h>
 #include <string>
 #include <vector>
 
 /**
  * Ließ die Datei aus den Env-args ein, lade das Programm und fuehre es aus
  *
- * @oaram argc Anzahl der gegebenen Argumente
- * @oaram argv Die gegebenen Argumente
+ * @param argc Anzahl der gegebenen Argumente
+ * @param argv Die gegebenen Argumente
  */
 int main(int argc, char const *argv[]) {
   if (argc < 2) {
