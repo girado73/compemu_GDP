@@ -7,19 +7,14 @@
 #include <unordered_map>
 
 /**
- * Setze den static Cursor auf 0
- */
-// TODO diesen hier vielleicht auf 1 setzen???
-int Comp::cursor = 0;
-
-/**
  * Erstelle den Compemulator +
  * definiere und lade alle Befehle in die Commands Map
  */
 Comp::Comp() {
   // Cursor reset for Tests
-  // TODO hier vielleicht auf auf 1 setzen???
   this->cursor = 0;
+
+  this->akk = 0;
 
   commands["LDAA"] = [this](const int &x) -> void { this->akk = getRam(x); };
   commands["LDAZ"] = [this](const int &x) -> void { this->akk = x; };
@@ -47,6 +42,11 @@ Comp::Comp() {
 }
 
 /**
+ * Setze den static Cursor auf 0
+ */
+int Comp::cursor = 0;
+
+/**
  * Dekonstrukte den Compemulator
  */
 Comp::~Comp() {}
@@ -57,7 +57,16 @@ Comp::~Comp() {}
  *  @param mem Die Memory Adresse in die geschrieben wird
  *  @param val Das Value zur Memory Adresse
  */
-void Comp::writeRam(int mem, int val) { this->ram[mem] = val; }
+void Comp::writeRam(int mem, int val) {
+  if (mem > 1000) {
+    throw std::out_of_range(
+        "Der Ram hat nur 1000 Speicherstellen zur verfügung");
+  }
+  if (mem < 0) {
+    throw std::invalid_argument("Der Ram hat nur Positive Speicherstellen");
+  }
+  this->ram[mem] = val;
+}
 
 /**
  * Gib ein Value aus der RAM-Map zurück
@@ -76,7 +85,27 @@ int Comp::getRam(int mem) {
 }
 
 /**
+ * Setze den Cursor auf einen bestimmten Wert
+ *
+ * @param x Der Wert auf den der Cursor gesetzt wird
+ */
+void Comp::setCursor(int x) {
+  if (x < 0) {
+    throw std::invalid_argument("Cursor muss größer oder gleich 0 sein");
+  } else {
+    this->cursor = x;
+  }
+}
+
+/**
+ * Setze den Cursor auf 0
+ */
+void Comp::resetCursor() { this->cursor = 0; }
+
+/**
  * Gette den Akkumulator (für Tests)
+ *
+ * @return Den Wert des Akkumulators
  */
 int Comp::getAKK() { return this->akk; }
 

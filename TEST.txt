@@ -1,0 +1,15 @@
+Sourcefile der Tests:
+
+/src/test.cpp
+
+Compilieren der Tests:
+
+make tests
+
+(Dabei werden alle Tests compiliert und in eine Binary gepackt)
+
+Ausführen der Tests:
+
+./bin/tester
+
+(Hier werden die Tests ausgeführt. Falls ein Test failen sollte, wird ein Assertationerror geworfen)

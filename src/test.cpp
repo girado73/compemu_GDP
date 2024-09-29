@@ -2,7 +2,6 @@
 #include <cassert>
 #include <iostream>
 #include <ostream>
-#include <utility>
 #include <vector>
 
 class tests {
@@ -261,6 +260,7 @@ void tests::run_tests() {
   jnz_test();
   stop_test();
   mem_override();
+  std::cout << "Alle Tests erfolgreich abgeschlossen" << std::endl;
 }
 
 int main() {
