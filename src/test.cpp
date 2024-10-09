@@ -264,7 +264,7 @@ void tests::run_tests() {
 }
 
 int main() {
-  tests tests = *new class tests();
+  tests tests;
 
   tests.run_tests();
   return 0;

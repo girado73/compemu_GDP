@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]) {
   std::vector<std::string> lines = readFile(filename);
   auto program = linesToProgram(lines);
 
-  Comp mycomp = *new Comp();
+  Comp mycomp;
 
   mycomp.loadProgram(program);
   mycomp.run();
