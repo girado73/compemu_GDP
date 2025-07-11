@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: create bin
+      run: mkdir bin
     - name: make
       run: make tests
     - name: Execute tester
